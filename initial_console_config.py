@@ -9,7 +9,7 @@ from connect import disconnect
 import sys
 import os
 import ast
-
+from read_file_dict import read_dict_file
 
 def initial_console_configuration(manual=1, conf_file='None', hosts_file=0, index=-1):#currently telnet gor gns3
 
@@ -60,15 +60,7 @@ def initial_console_configuration(manual=1, conf_file='None', hosts_file=0, inde
 
 
 
-        f=open(hosts_file,'r')
-        data=f.read()
-        f.close()
-
-
-
-        data=data.split()
-        data="".join(data)
-        data=ast.literal_eval(data)
+        data=read_dict_file(hosts_file)
 
 
 

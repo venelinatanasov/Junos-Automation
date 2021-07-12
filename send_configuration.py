@@ -1,3 +1,4 @@
+from read_file_dict import read_dict_file
 from jnpr.junos import Device
 from jnpr.junos.utils.config import Config
 from jnpr.junos.exception import ConnectError
@@ -63,7 +64,35 @@ def send_conf(dev, conf_file):
     # End the NETCONF session and close the connection
     dev.close()
 
+
+def send_configuration_sweep(conf_file, hosts_file,count):
+    for index in range(count):
+        data=read_dict_file(hosts_file)
+        if(data[index]['method']=='telnet'):
+            method=1
+            hostname=data[index]['hostname']
+            junos_username=data[index]['junos_username']
+            junos_password=data[index]['junos_password']
+            port=data[index]['port']
+            print(data[index])
+        
+        dev=connect(manual=0, method=method, hostname=hostname, junos_username=junos_username, junos_password=junos_password, port=port)
+        send_conf(dev, conf_file)
+
+            
+    
+
+
+    
+
+
+
+
+
+
 if __name__ == "__main__":
-    dev = connect()
-    conf = './configs/junos-config-mx.conf'
-    send_conf(dev, conf)
+    count=4
+    conf_file = './configs/junos-config.conf'
+    hosts_file='./configs/config_device_list.conf'
+    send_configuration_sweep(conf_file, hosts_file, count=4)
+    
