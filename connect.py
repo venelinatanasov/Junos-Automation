@@ -35,7 +35,10 @@ def connect(manual=1, method=0, hostname=0, junos_username=0, junos_password=0, 
     if(method==1):#Telnet
         print("Initiating Telnet session...")
         dev=Device(host=hostname, user=junos_username, passwd=junos_password, mode='telnet', port=port, use_filter=True)
-    #if(method==2):#SSH
+    if(method==2):#SSH
+        print("Initiating SSH Session...")
+        dev = Device(host=hostname, user=junos_username, password=junos_password, port=port )
+
     #if(method==3):#Console
     
 
@@ -128,4 +131,9 @@ def get_method_for_connection():#Takes user input, validates it and returns 1 fo
 
         
 if __name__ == '__main__':
-    connect()
+    #method = get_method_for_connection()
+    #credentials=get_junos_credentials()
+
+    dev=connect()
+    disconnect(dev)
+

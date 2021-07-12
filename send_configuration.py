@@ -70,11 +70,13 @@ def send_configuration_sweep(conf_file, hosts_file,count):
         data=read_dict_file(hosts_file)
         if(data[index]['method']=='telnet'):
             method=1
-            hostname=data[index]['hostname']
-            junos_username=data[index]['junos_username']
-            junos_password=data[index]['junos_password']
-            port=data[index]['port']
-            print(data[index])
+        if(data[index]['method']=='ssh'):
+            method=2
+        hostname=data[index]['hostname']
+        junos_username=data[index]['junos_username']
+        junos_password=data[index]['junos_password']
+        port=data[index]['port']
+        print(data[index])
         
         dev=connect(manual=0, method=method, hostname=hostname, junos_username=junos_username, junos_password=junos_password, port=port)
         send_conf(dev, conf_file)
